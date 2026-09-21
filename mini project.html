@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Window Event Demo</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            padding: 50px;
+        }
+
+        #output {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px solid black;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Window Event Demo</h1>
+    <p>Resize or scroll the browser window.</p>
+
+    <div id="output">Waiting for an event...</div>
+
+    <script>
+        let output = document.getElementById("output");
+
+        // Page loaded
+        window.addEventListener("load", function() {
+            output.innerHTML = "Page Loaded Successfully!";
+        });
+
+        // Window resized
+        window.addEventListener("resize", function() {
+            output.innerHTML =
+                "Window Size: " + window.innerWidth +
+                " x " + window.innerHeight;
+        });
+
+        // Window scrolled
+        window.addEventListener("scroll", function() {
+            output.innerHTML =
+                "You have scrolled " + window.scrollY + " pixels";
+        });
+
+        // Before closing/reloading
+        window.addEventListener("beforeunload", function(event) {
+            event.preventDefault();
+            event.returnValue = "";
+        });
+    </script>
+
+</body>
+</html>

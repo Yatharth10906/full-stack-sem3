@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: lightblue;
+            text-align: center;
+        }
+
+        .quiz {
+            width: 500px;
+            margin: 100px auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        #timer {
+            text-align: right;
+            font-size: 18px;
+            color: red;
+        }
+
+        #question {
+            font-size: 22px;
+            margin: 25px;
+        }
+
+        .option {
+            display: block;
+            width: 90%;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid gray;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background-color: lightgray;
+        }
+
+        #next {
+            margin-top: 20px;
+            padding: 10px 30px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="quiz">
+
+        <h1>Simple Quiz</h1>
+
+        <div id="timer">Time: 15</div>
+
+        <div id="question"></div>
+
+        <div id="options">
+            <button class="option" onclick="checkAnswer(0)"></button>
+            <button class="option" onclick="checkAnswer(1)"></button>
+            <button class="option" onclick="checkAnswer(2)"></button>
+            <button class="option" onclick="checkAnswer(3)"></button>
+        </div>
+
+        <button id="next" onclick="nextQuestion()">Next</button>
+
+        <p id="result"></p>
+
+    </div>
+
+
+    <script>
+
+        // Questions for the quiz
+        let questions = [
+            {
+                question: "Which language is used to create the structure of a webpage?",
+                options: ["CSS", "HTML", "JavaScript", "Python"],
+                answer: 1
+            },
+
+            {
+                question: "Which language is used to style a webpage?",
+                options: ["HTML", "Python", "CSS", "C++"],
+                answer: 2
+            },
+
+            {
+                question: "Which language is used to make a webpage interactive?",
+                options: ["JavaScript", "HTML", "CSS", "SQL"],
+                answer: 0
+            },
+
+        ];
+
+
+        let currentQuestion = 0;
+        let score = 0;
+        let time = 15;
+
+
+        // Getting HTML elements
+        let question = document.getElementById("question");
+        let optionButtons = document.getElementsByClassName("option");
+        let timer = document.getElementById("timer");
+        let result = document.getElementById("result");
+
+
+        // Display question
+        function showQuestion() {
+
+            question.innerHTML = questions[currentQuestion].question;
+
+            for (let i = 0; i < 4; i++) {
+                optionButtons[i].innerHTML =
+                    questions[currentQuestion].options[i];
+
+                optionButtons[i].disabled = false;
+            }
+
+            time = 15;
+            timer.innerHTML = "Time: " + time;
+        }
+
+
+        // Check selected answer
+        function checkAnswer(selectedAnswer) {
+
+            if (selectedAnswer == questions[currentQuestion].answer) {
+                score++;
+                alert("Correct Answer!");
+            }
+            else {
+                alert("Wrong Answer!");
+            }
+
+            // Disable buttons after selecting an answer
+            for (let i = 0; i < 4; i++) {
+                optionButtons[i].disabled = true;
+            }
+        }
+
+
+        // Go to next question
+        function nextQuestion() {
+
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            }
+            else {
+                question.innerHTML = "Quiz Completed!";
+                document.getElementById("options").style.display = "none";
+                document.getElementById("next").style.display = "none";
+                timer.style.display = "none";
+
+                result.innerHTML =
+                    "Your Score is " + score + " out of " + questions.length;
+            }
+        }
+
+
+        // Timer
+        setInterval(function() {
+
+            time--;
+
+            timer.innerHTML = "Time: " + time;
+
+            if (time == 0) {
+                nextQuestion();
+            }
+
+        }, 1000);
+
+
+        // Start quiz
+        showQuestion();
+
+    </script>
+
+</body>
+</html>
